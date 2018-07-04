@@ -4,9 +4,6 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 
-import ChatBox from './components/ChatBox'
-import ContactList from './components/ContactList'
-
 import '@/assets/styles/ress.css'
 import '@/assets/styles/style.css'
 
@@ -16,6 +13,6 @@ Vue.config.productionTip = false
 new Vue({
   el: '#app',
   router,
-  components: { App, ChatBox, ContactList },
+  components: { App },
   template: '<App/>'
 })
