@@ -1,22 +1,124 @@
 <template>
   <div class="wrapper">
     <div class="container">
-      <ContactList></ContactList>
-      <ChatBox></ChatBox>
+      <div class="left">
+        <div class="top">
+          <input type="text" />
+          <a href="javascript:;" class="search"></a>
+        </div>
+        <ul class="people">
+          <li
+            class="person"
+            v-for="(person, index) in contacts"
+            :key="index"
+            :class="{'active': index === activeUser}"
+            @click="selectContact(index)">
+            <img src="@/assets/img/profile.jpg" alt="">
+            <span class="name">{{person.name}}</span>
+            <span class="time">
+              {{person.messages.length ? person.messages[person.messages.length - 1].time : ''}}
+            </span>
+            <span class="preview">
+              {{person.messages.length ? person.messages[person.messages.length -1].text : ''}}
+            </span>
+          </li>
+        </ul>
+      </div>
+      <div class="right">
+        <div class="top">
+          <span>To:
+              <span class="name">{{contacts[activeUser].name}}</span>
+          </span>
+        </div>
+        <div class="chat active-chat">
+          <div class="conversation-start" v-if="contacts[activeUser].messages.length">
+            <span>{{contacts[activeUser].messages[0].time}}</span>
+          </div>
+          <div
+            class="bubble"
+            :class="{
+              'me': msg.sender === 'me',
+              'you': msg.sender === 'you'
+            }"
+            v-if="contacts[activeUser].messages.length"
+            v-for="(msg, index) in contacts[activeUser].messages"
+            :key="index">
+            {{msg.text}}
+          </div>
+        </div>
+        <div class="write">
+          <a href="javascript:;" class="write-link attach"></a>
+          <input
+            type="text"
+            placeholder="Your message here"
+            v-model="newMessage.text"
+            @keypress.enter="sendMessage" autofocus />
+          <a href="javascript:;" class="write-link smiley"></a>
+          <a class="write-link send"
+             @click="sendMessage"></a>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import ChatBox from './ChatBox'
-import ContactList from './ContactList'
-
 export default {
   name: 'Home',
-  components: {
-    ChatBox,
-    ContactList
+  data () {
+    return {
+      activeUser: 0,
+      contacts: [
+        {
+          name: 'Thomas Bangalter',
+          messages: []
+        },
+        {
+          name: 'Nhan',
+          messages: []
+        }
+      ],
+      newMessage: {
+        text: '',
+        time: '',
+        sender: 'me'
+      }
+    }
+  },
+  methods: {
+    selectContact (index) {
+      this.activeUser = index
+    },
+    sendMessage () {
+      const activeIndex = this.activeUser
+
+      if (this.newMessage.text) {
+        this.newMessage.time = newDateTime()
+        this.contacts[activeIndex].messages.push(this.newMessage)
+        this.newMessage = {
+          text: '',
+          time: '',
+          sender: 'me'
+        }
+        setTimeout(() => this.respond(activeIndex), 2000)
+      }
+    },
+    respond (index) {
+      this.contacts[index].messages.push({
+        text: 'Thank you for your message',
+        time: newDateTime(),
+        sender: 'you'
+      })
+    }
   }
+}
+
+function newDateTime () {
+  let date = new Date()
+  const hour = date.getHours()
+  const minute = date.getMinutes()
+
+  return `${hour > 10 ? hour : `0${hour}`}:${minute}`
 }
 </script>
 
