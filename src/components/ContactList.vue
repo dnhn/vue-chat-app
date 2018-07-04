@@ -5,20 +5,36 @@
       <a href="javascript:;" class="search"></a>
     </div>
     <ul class="people">
-      <li class="person active">
-        <img src="@/assets/img/profile.jpg" alt="" />
-        <span class="name">Thomas Bangalter</span>
-        <span class="time">2:09 PM</span>
-        <span class="preview">I was wondering...</span>
+      <li
+        class="person"
+        v-for="(person, index) in contacts"
+        :key="index"
+        :class="{'active': index === activeUser}"
+        @click="selectContact(index)">
+        <Contact :person="person" />
       </li>
     </ul>
   </div>
 </template>
 
 <script>
-  export default {
-    name: 'ContactList'
+import Contact from './Contact'
+
+export default {
+  name: 'ContactList',
+  components: { Contact },
+  props: ['contacts'],
+  data () {
+    return {
+      activeUser: 0
+    }
+  },
+  methods: {
+    selectContact (index) {
+      this.activeUser = index
+    }
   }
+}
 </script>
 
 <style scoped>
