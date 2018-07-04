@@ -51,6 +51,7 @@
           <input
             type="text"
             placeholder="Your message here"
+            ref="inputMessage"
             v-model="newMessage.text"
             @keypress.enter="sendMessage" autofocus />
           <a href="javascript:;" class="write-link smiley"></a>
@@ -88,6 +89,7 @@ export default {
   methods: {
     selectContact (index) {
       this.activeUser = index
+      this.$refs.inputMessage.focus()
     },
     sendMessage () {
       const activeIndex = this.activeUser
