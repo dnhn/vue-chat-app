@@ -71,12 +71,44 @@ export default {
       activeUser: 0,
       contacts: [
         {
-          name: 'Thomas Bangalter',
-          messages: []
+          name: 'Evan You',
+          messages: [
+            {
+              text: 'Welcome to Vue.js',
+              time: '19:00',
+              sender: 'you'
+            }
+          ]
         },
         {
-          name: 'Nhan',
-          messages: []
+          name: 'Mark Evans',
+          messages: [
+            {
+              text: 'Thank you very much!',
+              time: '23:09',
+              sender: 'you'
+            },
+            {
+              text: 'My pleasure.',
+              time: '23:20',
+              sender: 'me'
+            }
+          ]
+        },
+        {
+          name: 'Momcilo Popov',
+          messages: [
+            {
+              text: 'Hi there!',
+              time: '21:00',
+              sender: 'me'
+            },
+            {
+              text: 'Nice to meet you!',
+              time: '21:10',
+              sender: 'you'
+            }
+          ]
         }
       ],
       newMessage: {
@@ -124,6 +156,4 @@ function newDateTime () {
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
