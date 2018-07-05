@@ -152,7 +152,7 @@ function newDateTime () {
   const hour = date.getHours()
   const minute = date.getMinutes()
 
-  return `${hour > 10 ? hour : `0${hour}`}:${minute}`
+  return `${hour >= 10 ? hour : `0${hour}`}:${minute >= 10 ? minute : `0${minute}`}`
 }
 </script>
 
